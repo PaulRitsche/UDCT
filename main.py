@@ -4,6 +4,7 @@ import sys
 from os import environ as cuda_environment
 import os
 import numpy as np
+import tensorflow as tf
 
 if __name__ == "__main__":
     # List of floats
@@ -16,8 +17,8 @@ if __name__ == "__main__":
     
     # List of ints
     sub_value_i = {}
-    sub_value_i['epoch']       = 200             # Number of epochs to be trained
-    sub_value_i['batch_size']  = 4               # Batch size for training
+    sub_value_i['epoch']       = 10             # Number of epochs to be trained
+    sub_value_i['batch_size']  = 1               # Batch size for training
     sub_value_i['buffer_size'] = 50              # Number of history elements used for Dis
     sub_value_i['save']        = 1               # If not 0, model is saved
     sub_value_i['gpu']         = 0               # Choose the GPU ID (if only CPU training, choose nonexistent number)
@@ -36,6 +37,9 @@ if __name__ == "__main__":
     var_dict  = sub_string.copy()
     var_dict.update(sub_value_i)
     var_dict.update(sub_value_f)
+
+    # Search for GPUs
+    print("GPUs Available: ", tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None))
     
     # Update all defined parameters in dictionary
     for arg_i in sys.argv[1:]:
